@@ -40,7 +40,9 @@
 
 
 
-<script src="/js/lib/home.js"></script>
+
+
+
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -149,35 +151,11 @@
     </div>
 </nav>
 
-                <div id="home-head">
-    <div id="home-background" ref="homeBackground" data-image="/images/backgroud.png"></div>
-    
-    <div id="home-info" @click="homeClick">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>xi &amp; Blog</h1>
-                <h3></h3>
-                <h5>一个萌新pwn手的小房间</h5>
-            </div>
-        </span>
+                <div class="article">
+    <div>
+        <h1></h1>
     </div>
-    
-</div>
-<div id="home-posts-wrap"  ref="homePostsWrap">
-    <div id="home-posts">
-        <div id="posts">
-            
-
-<div class="post">
-    <a href="/2022/11/23/plt&got%E8%A1%A8%E8%AF%A6%E8%A7%A3/">
-        <h2 class="post-title"></h2>
-    </a>
-    <div class="category-and-date">
-        
+    <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
@@ -187,10 +165,9 @@
         
         
     </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>PLT和GOT</p>
+    
+    <div class="content" v-pre>
+        <p>PLT和GOT</p>
 <ul>
 <li>GOT（Global Offset Table）全局偏移表。存储导入变量的地址</li>
 <li>PLT（Procedure Linkage Table）程序链接表。它有两个功能，要么在 <code>.got.plt</code> 节中拿到地址，并跳转。要么当 <code>.got.plt</code> 没有所需地址的时，触发「链接器」去找到所需地址，与常见导入的函数有关，如 read 等函数。</li>
@@ -308,63 +285,13 @@ int main(int argc, char **argv)
  23 .data         00000008  0804a018  0804a018  00001018  2**2
 </code></pre>
 
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2022/11/23/plt&got%E8%A1%A8%E8%AF%A6%E8%A7%A3/" class="go-post">阅读全文</a>
-</div>
-
-
-            <div class="page-current">
-    <div class="prev">
-        
-    </div>
-    <div class="page-index">
-        
-        <span class="current">1</span>
-        
-    </div>
-    <div class="next">
-        
-    </div>
-</div>
-
-        </div>
     </div>
     
-    <div id="home-card">
-        <div id="card-div">
-    <div class="card-style" style="width: 300px">
-        <div class="avatar">
-            <img src="/images/avatar.jpg" alt="avatar" />
-        </div>
-        <div class="name">enicky</div>
-        <div class="description">
-            <p>人间何所以，观风与月舒<br>…</p>
-
-        </div>
-        
-        
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://github.com/enickyxi">github</a>
-            </div>
-            
-            <div class="friend-link">
-                <a href="/enicky_ary@outlook.com">mail</a>
-            </div>
-            
-        </div>
-        
-    </div>
-</div>
-
-    </div>
+    
+    
+    
+    
+    
     
 </div>
 
@@ -397,6 +324,12 @@ int main(int argc, char **argv)
             
         </div>
         <script src="/js/main.js"></script>
+        
+        
+
+
+
+
         
     </body>
 </html>
