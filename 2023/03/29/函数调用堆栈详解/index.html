@@ -187,7 +187,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/CTF-PWN/" style="color: #03a9f4">CTF PWN</a>
+                <a href="/tags/CTF-PWN/" style="color: #ff7d73">CTF PWN</a>
             </span>
             
         </span>
@@ -195,9 +195,8 @@
     </div>
     
     <div class="content" v-pre>
-        <h4 id="函数调用堆栈详解"><a href="#函数调用堆栈详解" class="headerlink" title="函数调用堆栈详解"></a>函数调用堆栈详解</h4><img src="https://pics0.baidu.com/feed/8644ebf81a4c510fd316c9d7f2b7b624d62aa520.jpeg?token=1eae36dbe785daea7742a6b3726207cb" alt="img" style="zoom: 67%;" />
-
-<p><img src="X:\Blog\source\post_images\image-20220525195732832.png" alt="image-20220525195732832"></p>
+        <h4 id="函数调用堆栈详解"><a href="#函数调用堆栈详解" class="headerlink" title="函数调用堆栈详解"></a>函数调用堆栈详解</h4><p><img src="/%5CBlog%5Csource%5Cpost_images%5C8644ebf81a4c510fd316c9d7f2b7b624d62aa520.jpeg" alt="8644ebf81a4c510fd316c9d7f2b7b624d62aa520"></p>
+<p><img src="/%5CBlog%5Csource%5Cpost_images%5Cimage-20220525195732832.png" alt="image-20220525195732832"></p>
 <p>当进程被加载到内存时，会被分成很多段</p>
 <ol>
 <li>代码段：保存程序文本，指令指针EIP就是指向代码段，可读可执行不可写，如果发生写操作则会提示segmentation fault</li>
@@ -208,7 +207,7 @@
 <li>环境&#x2F;参数段（environment&#x2F;argumentssection）：用来存储系统环境变量的一份复制文件，进程在运行时可能需要。例如，运行中的进程，可以通过环境变量来访问路径、shell 名称、主机名等信息。该节是可写的，因此在缓冲区溢出（buffer overflow）攻击中都可以使用该段</li>
 </ol>
 <p>栈帧的基本结构：</p>
-<p><img src="X:\Blog\source\post_images\image-20220525201021808.png" alt="image-20220525201021808">下面以一段代码来进行详解函数调用栈的过程</p>
+<p><img src="/%5CBlog%5Csource%5Cpost_images%5Cimage-20220525201021808.png" alt="image-20220525201021808">下面以一段代码来进行详解函数调用栈的过程</p>
 <pre><code>int sum(int _a,int _b)
 &#123;
     int c=0;
@@ -228,8 +227,8 @@ int main()
     return 0；
 &#125;
 </code></pre>
-<p><img src="X:\Blog\source\post_images\image-20220525201939906.png" alt="image-20220525201939906"></p>
-<p><img src="X:\Blog\source\post_images\image-20220525204102769.png" alt="image-20220525204102769"></p>
+<p><img src="/%5CBlog%5Csource%5Cpost_images%5Cimage-20220525201939906.png" alt="image-20220525201939906"></p>
+<p><img src="/%5CBlog%5Csource%5Cpost_images%5Cimage-20220525204102769.png" alt="image-20220525204102769"></p>
 <p>从上面的流程图以后就是正常的sum函数执行传参然后函数操作的过程。就不过多赘述。</p>
 
     </div>
