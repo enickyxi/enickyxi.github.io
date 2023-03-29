@@ -187,7 +187,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/CTF-PWN/" style="color: #00a596">CTF PWN</a>
+                <a href="/tags/CTF-PWN/" style="color: #ff7d73">CTF PWN</a>
             </span>
             
         </span>
@@ -251,10 +251,10 @@ int main(void)
 gcc -o test test.o -m32
 objdump -d test.o
 </code></pre>
-<p><img src="X:\桌面记录文件夹\学习记录\内容\47ol4n8cq7.png" alt="47ol4n8cq7"></p>
+<p><img src="X:\Blog\source\post_images\47ol4n8cq7.png" alt="47ol4n8cq7"></p>
 <p>printf () 和函数是在 glibc 动态库里面的，只有当程序运行起来的时候才能确定地址，所以此时的 printf () 函数先用 fc ff ff ff 也就是有符号数的 -4 代替</p>
 <p>程序运行时，printf的地址就会被存储到data段（data段中存储printf地址相当于printf的got表），（相当于printf的plt表）printf_sub就会跳转到data段中printf地址，最后到printf函数。</p>
-<p><img src="X:\桌面记录文件夹\学习记录\内容\27f70ib020.jpeg" alt="27f70ib020"></p>
+<p><img src="X:\Blog\source\post_images\27f70ib020.jpeg" alt="27f70ib020"></p>
 <p>执行过程如上所示。</p>
 <hr>
 <p>参考博客</p>
